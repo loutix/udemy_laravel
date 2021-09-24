@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -36,13 +37,22 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $title = $request->title;
+
+
+        $file = $request->file('upload');
+        $nameFile= $file->getClientOriginalName();
+        $file->move('upload_doc', $nameFile);
+
+        $validated = $request->title;
+
+
+
 
         Post::create([
             'user_id' => 1,
-            'title' => $title,
+            'title' => $validated,
             'description' => 'hello'
         ]);
 
