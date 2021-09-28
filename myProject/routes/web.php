@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,8 +98,20 @@ Route::group(['middleware' => 'web'], function () {
 
     });
 
+
+    Route::get('admin/', 'adminController@index');
+    Route::get('/users/list', 'UserController@list');
+    Route::resource('/users', 'UserController')->middleware('auth:sanctum');
+
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/admin/user/roles', [ 'middleware' =>['role',],function(){
+    return 'hello amdmin user role';
+}]);
+
+

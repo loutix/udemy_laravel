@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatePostRequest;
-use App\Post;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Auth;
 
-class PostsController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,20 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        return 'index';
 
-        return view('index', compact('posts'));
+
+    }
+
+    public function list(){
+
+        $user = User::find(1);
+
+        foreach ($user->roles as $role) {
+           print_r($role);
+        }
+
+
     }
 
     /**
@@ -28,7 +38,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('form');
+        //
     }
 
     /**
@@ -37,26 +47,9 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePostRequest $request)
+    public function store(Request $request)
     {
-
-
-        $file = $request->file('upload');
-        $nameFile= $file->getClientOriginalName();
-        $file->move('upload_doc', $nameFile);
-
-        $validated = $request->title;
-
-
-
-
-        Post::create([
-            'user_id' => 1,
-            'title' => $validated,
-            'description' => 'hello'
-        ]);
-
-        return redirect('/form');
+        //
     }
 
     /**
@@ -67,11 +60,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post1 = Post::find($id);
-
-        $post = collect($post1);
-
-        return view('show', compact('post', 'post1'));
+        //
     }
 
     /**
@@ -82,12 +71,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $editPost= Post::find($id);
-
-        //dd($editPost);
-
-        return view('edit', compact('editPost'));
-
+        //
     }
 
     /**
@@ -98,12 +82,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-
     {
-        $newTitle = $request->title;
-        Post::find($id)->update(['title' => $newTitle]);
-
-        return redirect('/form');
+        //
     }
 
     /**
@@ -114,10 +94,6 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-
-        Post::find($id)->delete();
-        return redirect('/form');
+        //
     }
-
-
 }

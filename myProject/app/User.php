@@ -9,11 +9,14 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+   // protected $with = ['roles'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
+     *
+     *
+     *
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -46,5 +49,14 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany('App\Role');
+    }
+
+    public function isAdmin(){
+        if($this->role->name == 'admin') {
+
+            return true;
+        }
+
+        return false;
     }
 }
