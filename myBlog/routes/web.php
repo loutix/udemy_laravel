@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/post/{post}', 'PostController@show')->name('post');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/admin', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/post/create', 'PostController@create')->name('post.create');
+});
