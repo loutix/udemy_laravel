@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -36,7 +39,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $inputs = request()->validate([
+            'title'=>'required|min:2|max:255',
+            'post_image'=>'required',
+            'body'=>'required|min:2|max:255',
+        ]);
+
+
+        $name = request('post_image')->getClientOriginalName();
+
+        if(request('post_image')){
+            $inputs['post_image'] = $request->file('post_image')->store('avatars2', 'public');
+
+        }
+
+        // auth()->user()->posts()->create($inputs);
+
+        $currentUser = User::with('posts')->find(Auth::id());
+        $currentUser->posts()->create($inputs);
+        return back();
     }
 
     /**
