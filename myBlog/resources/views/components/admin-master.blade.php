@@ -13,24 +13,14 @@
 
     <!-- Custom fonts for this template-->
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <link href="{{ asset('css/app.css') }}">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="asset('vendor/fontawesome-free/css/all.min.css')" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
 
 
     <!-- Custom styles for this template-->
@@ -415,11 +405,19 @@
     </div>
 
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.js') }}"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+
+    @yield('scripts')
 
 </body>
 

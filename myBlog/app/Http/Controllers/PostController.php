@@ -18,7 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('blog-post');
+
+        $posts = Post::with('user')->get();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -41,24 +44,20 @@ class PostController extends Controller
     {
 
         $inputs = request()->validate([
-            'title'=>'required|min:2|max:255',
-            'post_image'=>'required',
-            'body'=>'required|min:2|max:255',
+            'title' => 'required|min:2|max:255',
+            'post_image' => 'file',
+            'body' => 'required|min:2|max:255',
         ]);
 
-
-        $name = request('post_image')->getClientOriginalName();
-
-        if(request('post_image')){
+        if (request('post_image')) {
             $inputs['post_image'] = $request->file('post_image')->store('avatars2', 'public');
-
         }
 
         // auth()->user()->posts()->create($inputs);
 
         $currentUser = User::with('posts')->find(Auth::id());
         $currentUser->posts()->create($inputs);
-        return back();
+        return redirect('/admin/post')->with('success', 'You have created a post !');
     }
 
     /**
@@ -80,7 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -92,7 +91,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+
+        $inputs = request()->validate([
+            'title' => 'required|min:2|max:255',
+            'post_image' => 'file',
+            'body' => 'required|min:2|max:255',
+        ]);
+
+        if (request('post_image')) {
+            $inputs['post_image'] = $request->file('post_image')->store('avatars2', 'public');
+            $post->post_image = $inputs['post_image'];
+        }
+
+        $post->title = $inputs['title'];
+        $post->body = $inputs['body'];
+        $post->save();
+
+        return redirect('/admin/post')->with('success', 'You have updated the post  !');
     }
 
     /**
@@ -103,6 +118,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return back()->with('warning', 'You have delete the item !');
     }
 }
