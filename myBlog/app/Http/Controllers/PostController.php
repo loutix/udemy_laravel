@@ -42,10 +42,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $this->authorize('create', Post::class);
-
+        $this->authorize('view', Post::class);
 
         $inputs = request()->validate([
             'title' => 'required|min:2|max:255',
