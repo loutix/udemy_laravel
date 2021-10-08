@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
-    protected $fillable = ['user_id','title','post_image','body'];
+    protected $fillable = ['user_id', 'title', 'post_image', 'body'];
 
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
@@ -20,12 +21,11 @@ class Post extends Model
     //     $this->attributes['post_image'] = asset($value);
     // }
 
-    public function getPostImageAttribute($value) {
-
-
+    public function getPostImageAttribute($value)
+    {
         if (strpos($value, 'https://') !== FALSE || strpos($value, 'http://') !== FALSE) {
             return $value;
         }
         return asset('storage/' . $value);
-        }
+    }
 }

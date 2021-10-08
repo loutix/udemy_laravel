@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','username','avatar'
     ];
 
     protected $guarded = [];
@@ -40,20 +40,41 @@ class User extends Authenticatable
     ];
 
 
-    public function posts() {
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+
+    public function getAvatarAttribute($value)
+    {
+        if (strpos($value, 'https://') !== FALSE || strpos($value, 'http://') !== FALSE) {
+            return $value;
+        }
+        return asset('storage/' . $value);
+    }
+
+    public function posts()
+    {
         return $this->hasMany('App\Post');
     }
 
-
-    public function roles(){
-        return $this->belongsToMany('App\Role');
-    }
-
-    public function permissions(){
+    public function permissions()
+    {
         return $this->belongsToMany('App\Permission');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
 
 
-
+    public function userHasRole($role_name)
+    {
+        foreach ($this->roles as $role) {
+            if ($role_name == $role->name)
+                return true;
+        }
+        return false;
+    }
 }

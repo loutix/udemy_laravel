@@ -32,9 +32,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/post', 'PostController@index')->name('post.index');
     Route::delete('/admin/post/{post}/delete', 'PostController@destroy')->name('post.destroy');
     Route::put('/admin/post/{post}/update', 'PostController@update')->name('post.update');
+    Route::get('/admin/post/{post}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
 
+
+    route::get('/admin/users/{user}/profile', 'UserController@show')->name('user.profile.show');
+    route::put('/admin/users/{user}/update', 'UserController@update')->name('user.profile.update');
 
 });
 
-Route::get('/admin/post/{post}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
 //meme directire que dans le controller
