@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ Str::limit($post->body, '50', '...')}}</td>
+                                    <td>{{ Str::limit($post->body, '50', '...') }}</td>
                                     <td>
                                         <img height='60px' src='{{ $post->post_image }}'>
                                     </td>
@@ -56,14 +56,17 @@
                                             <button class="btn btn-warning">Edit</button>
                                         </a>
                                     </td>
+
                                     <td>
+                                        @can('view', $post)
 
+                                            {!! Form::open(['route' => ['post.destroy', $post->id], 'method' => 'delete']) !!}
+                                            {!! Form::submit('supprimer', ['class' => 'btn btn-danger']) !!}
+                                            {!! Form::close() !!}
 
-                                        {!! Form::open(['route' => ['post.destroy', $post->id], 'method' => 'delete']) !!}
-                                        {!! Form::submit('supprimer', ['class' => 'btn btn-danger']) !!}
-                                        {!! Form::close() !!}
-
+                                        @endcan
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -73,6 +76,9 @@
             </div>
         </div>
 
+
+
+        {{ $posts->links() }}
     @endsection
 
 
@@ -83,7 +89,7 @@
         <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
         <!-- Page level custom scripts -->
-        <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+        {{-- <script src="{{ asset('js/demo/datatables-demo.js') }}"></script> --}}
 
 
     @endsection

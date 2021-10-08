@@ -31,8 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/post', 'PostController@store')->name('post.store');
     Route::get('/admin/post', 'PostController@index')->name('post.index');
     Route::delete('/admin/post/{post}/delete', 'PostController@destroy')->name('post.destroy');
-    Route::get('/admin/post/{post}/edit', 'PostController@edit')->name('post.edit');
     Route::put('/admin/post/{post}/update', 'PostController@update')->name('post.update');
 
 
 });
+
+Route::get('/admin/post/{post}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
+//meme directire que dans le controller
