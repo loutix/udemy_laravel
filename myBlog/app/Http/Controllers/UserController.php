@@ -14,7 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy('updated_at','desc')->paginate(5);
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -96,6 +98,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+
+        User::destroy($user->id);
+        session()->flash('user-deleted','User has been deleted');
+        return back();
+
     }
 }

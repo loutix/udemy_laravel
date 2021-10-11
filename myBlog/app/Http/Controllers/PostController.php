@@ -129,7 +129,6 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
 
-
         Post::destroy($post->id);
         return back()->with('warning', 'You have delete the item !');
     }

@@ -34,9 +34,17 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/post/{post}/update', 'PostController@update')->name('post.update');
     Route::get('/admin/post/{post}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
 
-
-    route::get('/admin/users/{user}/profile', 'UserController@show')->name('user.profile.show');
     route::put('/admin/users/{user}/update', 'UserController@update')->name('user.profile.update');
+
+    route::delete('/admin/users/{user}/delete', 'UserController@destroy')->name('users.destroy');
+});
+
+Route::middleware(['role:Admin'])->group(function () {
+    route::get('/admin/users', 'UserController@index')->name('users.index');
+});
+
+Route::middleware(['auth', 'can:view,user'])->group(function () {
+    route::get('/admin/users/{user}/profile', 'UserController@show')->name('user.profile.show');
 
 });
 
